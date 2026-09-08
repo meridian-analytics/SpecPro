@@ -22,6 +22,27 @@ The original HDF5 database is opened in **read-only mode** and is never modified
 > Processing parameters and the order of processing stages may be adjusted and evaluated before processing each new dataset. Processing parameters can be adjusted using the CLI arguments. Modifications to the processing stages or their order require updating the pam_processing_pipeline.py module.
 
 ---
+## Table of Contents
+
+* [Overview](#overview)
+
+  * [Module Responsibilities](#module-responsibilities)
+* [Processing Pipeline](#processing-pipeline)
+
+  * [HDF5 Database Structure](#hdf5-database-structure)
+  * [Input Sanitization](#input-sanitization)
+  * [Enhancement Stages](#enhancement-stages)
+* [Command-Line Usage](#command-line-usage)
+
+  * [Example](#example)
+  * [Command-Line Arguments](#command-line-arguments)
+* [Installation](#installation)
+
+  * [Notes](#notes)
+* [Future Development](#future-development)
+* [Author](#author)
+* [License and Disclaimer](#license-and-disclaimer)
+
 
 ## Overview
 
@@ -244,19 +265,13 @@ pip install -r requirements.txt
 
 # Future Development
 
-Potential improvements include:
+Planned improvements include:
 
 * Parallel processing of independent spectrograms
-* Configurable wavelet parameters
 * Configurable refinement flags
-* YAML/JSON configuration files
 * Detailed processing logs
 * Progress bars
-* Unit tests
 * Performance benchmarking
-* Output validation
-* Automatic database integrity checks
-* Optional multiprocessing for large databases
 
 ---
 
