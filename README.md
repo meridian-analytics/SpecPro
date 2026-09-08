@@ -1,4 +1,4 @@
-# Spectrogram Processing Pipeline
+# Spectrogram Processing (**SpecPro**) Pipeline
 
 A Python-based spectrogram enhancement and denoising pipeline for **Passive Acoustic Monitoring (PAM)** data stored in a **Ketos-compatible HDF5 databases**.
 
