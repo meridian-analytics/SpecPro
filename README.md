@@ -1,12 +1,12 @@
 # PAM Spectrogram Enhancement Pipeline
 
-A Python-based spectrogram enhancement and denoising pipeline for **Passive Acoustic Monitoring (PAM)** data stored in a **Ketos HDF5 databases**.
+A Python-based spectrogram enhancement and denoising pipeline for **Passive Acoustic Monitoring (PAM)** data stored in a **Ketos-based HDF5 databases**.
 
 The pipeline applies a multi-stage signal-processing workflow to each spectrogram, including:
 
 * Pre-whitening - to reduces red noise  
 * Iterative Wiener filtering - to enhance signal to noise ratio using an estimate of the local signal/noise structure
-* Wavelet-based denoising - to remove white noise while preserving localized acoustic structures
+* 2-D Wavelet denoising filter - to remove white noise while preserving localized acoustic structures
 * Optional spectrogram resizing
 
 Each step (except resizing) is followed by a refinement loop to remove artefacts, including:
@@ -14,6 +14,30 @@ Each step (except resizing) is followed by a refinement loop to remove artefacts
 * Gaussian smoothing
 
 The original HDF5 database is opened in **read-only mode** and is never modified. A new timestamped HDF5 database is created containing the processed spectrograms and the original metadata/non-data fields.
+
+---
+> [!IMPORTANT]
+> **The provided processing pipeline must be tested and optimized for each project.**
+>
+> Processing parameters and the order of processing stages may be adjusted and evaluated before processing each new dataset. Processing parameters can be adjusted using the CLI arguments. Modifications to the processing stages or their order require updating the pam_processing_pipeline.py module.
+
+---
+
+# Author
+
+**Farid Jedari-Eyvazi, PhD**
+
+Senior Data Scientist / Machine Learning Engineer
+
+---
+
+# License and Disclaimer
+
+This tool is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html) (GPLv3).
+
+This software is provided **"as-is"**, without warranty of any kind, either express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.
+
+By using this tool, you acknowledge and accept all risks associated with its use. Please refer to the full GPLv3 license text for additional details regarding usage, modification, and redistribution.
 
 ---
 
@@ -97,9 +121,9 @@ This prevents **NaN, infinite, and excessively small values** from propagating t
 Each spectrogram then passes through the following stages:
 
 ```text
-Input Spectrogram
-       │
-       ▼
+ **Input Spectrogram**
+           │
+           ▼
 ┌──────────────────────┐
 │ Input Sanitization   │
 │ NaN / Inf handling   │
@@ -114,47 +138,47 @@ Input Spectrogram
            │
            ▼
 ┌──────────────────────┐
-│ Refinement            │
-│ SVD + Gaussian        │
-│ smoothing             │
+│ Refinement:          │
+│ SVD + Gaussian       │
+│ smoothing            │
 └──────────┬───────────┘
            │
            ▼
 ┌──────────────────────┐
-│ Iterative Wiener      │
-│ filtering             │
+│ Iterative Wiener     │
+│ filtering            │
 └──────────┬───────────┘
            │
            ▼
 ┌──────────────────────┐
-│ Refinement            │
-│ Gaussian smoothing    │
+│ Refinement:          │
+│ Gaussian smoothing   │
 └──────────┬───────────┘
            │
            ▼
 ┌──────────────────────┐
-│ Wavelet Denoising     │
-│ 2-D thresholding      │
+│ Wavelet Denoising    │
+│ 2-D thresholding     │
 └──────────┬───────────┘
            │
            ▼
 ┌──────────────────────┐
-│ Refinement            │
-│ Gaussian smoothing    │
+│ Refinement:          │
+│ Gaussian smoothing   │
 └──────────┬───────────┘
            │
            ▼
 ┌──────────────────────┐
-│ Numerical Cleanup     │
+│ Numerical Cleanup    │
 └──────────┬───────────┘
            │
            ▼
 ┌──────────────────────┐
-│ Optional Resize       │
+│ Optional Resize      │
 └──────────┬───────────┘
            │
            ▼
-Enhanced Spectrogram
+**Enhanced Spectrogram**
 ```
 
 # Command-Line Usage
@@ -253,33 +277,6 @@ Potential improvements include:
 
 ---
 
-# License
 
-Add the appropriate project license here.
-
-For example:
-
-```text
-This project is licensed under the MIT License.
-See the LICENSE file for details.
-```
-
----
-
-# Author
-
-**Farid Jedari-Eyvazi, PhD**
-
-Senior Data Scientist / Machine Learning Engineer
-
----
-
-# Citation
-
-If this software is used in a publication, please cite the associated repository and/or publication:
-
-```text
-[Add citation information here]
-```
 
 
