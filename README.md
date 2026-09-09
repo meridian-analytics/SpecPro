@@ -417,8 +417,11 @@ python run_processing_pipeline.py input.h5 output.h5 --k 1.0 --perc 50 --thresho
 **A few notes on performance and logging**
 
 --workers: More workers do not necessarily mean faster processing. Performance depends on CPU/RAM resources, HDF5 I/O, spectrogram size, and pipeline complexity.
+
 --chunksize: The default 1 provides fine-grained task scheduling and responsive progress tracking. Larger values can reduce multiprocessing overhead but may reduce scheduling flexibility.
+
 --log_level: Use DEBUG for detailed diagnostics or WARNING for less verbose console output. A persistent log file is generated for every processing run.
+
 --flush_interval: Controls how frequently the output HDF5 table is flushed to disk. The default is 100 rows. Larger values can reduce I/O overhead for large datasets, while smaller values provide more frequent persistence.
 
 ---
