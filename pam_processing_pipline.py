@@ -154,7 +154,7 @@ class EnhanceSNR:
     The processed spectrogram is sanitized again before being returned.
     """
 
-    def __init__(self, k=1.0, perc=50, thr_ft=0.7, kernel_size=(0.8, 0.4), n_iter=2, eps=1e-12, resized_axis=(None, None)):
+    def __init__(self, k=2, perc=90, thr_ft=1, kernel_size=(0.8, 0.4), n_iter=2, eps=1e-12, resized_axis=(None, None), wavelet="db4", w_level=None, w_mode='soft', flag_svd=0, flag_S=0, flag_G=1):
 
         self.k = k
         self.perc = perc
@@ -164,6 +164,12 @@ class EnhanceSNR:
         self.kernel_size = kernel_size
         self.f = resized_axis[0] # frequency dimension
         self.t = resized_axis[1] # time dimension
+        self.wavelet=wavelet
+        self.w_level=w_level
+        self.w_mode=w_mode
+        self.flag_svd = flag_svd
+        self.flag_S = flag_S
+        self.flag_G = flag_G
 
     def __call__(self, rep):
         """
@@ -197,15 +203,15 @@ class EnhanceSNR:
 
         # 2. PRE-WHITENING - to reduces red noise  
         S_white_i, _, _ = pre_whitening(Sxx, noise_estimation="median_residual", smooth_sigma=2.0, noise_percentile=20, floor_percentile=10, eps=1e-12)
-        S_white = refinement_loop(S_white_i, k=self.k, perc=self.perc, kernel_size=self.kernel_size, flag_svd=1, flag_S=0, flag_G=1)
+        S_white = refinement_loop(S_white_i, k=self.k, perc=self.perc, kernel_size=self.kernel_size, flag_svd=1, flag_S=self.flag_S, flag_G=self.flag_G)
  
         # 3. ITERATIVE WIENER FILTERING - to separate signal from background noise using an estimate of the local signal/noise structure.
         S_wiener_i = iterative_wiener(S_white, n_iter=self.n_iter)
-        S_wiener = refinement_loop(S_wiener_i, k=self.k, perc=self.perc, kernel_size=self.kernel_size, flag_svd=0, flag_S=0, flag_G=1)
+        S_wiener = refinement_loop(S_wiener_i, k=self.k, perc=self.perc, kernel_size=self.kernel_size, flag_svd=self.flag_svd, flag_S=self.flag_S, flag_G=self.flag_G)
 
         # 4. WAVELET DENOISING - to remove additional noise while preserving localized acoustic structures.
-        S_denoised_i = wavelet_denoise_spectrogram(S_wiener, wavelet="db4", level=None, threshold_scale_ft=self.thr_ft, mode="soft", threshold_method="global")
-        S_denoised = refinement_loop(S_denoised_i, k=self.k, perc=self.perc, kernel_size=self.kernel_size, flag_svd=0, flag_S=0, flag_G=1)
+        S_denoised_i = wavelet_denoise_spectrogram(S_wiener, wavelet=self.wavelet, level=self.w_level, threshold_scale_ft=self.thr_ft, mode=self.w_mode, threshold_method="global")
+        S_denoised = refinement_loop(S_denoised_i, k=self.k, perc=self.perc, kernel_size=self.kernel_size, flag_svd=self.flag_svd, flag_S=self.flag_S, flag_G=self.flag_G)
 
         # 5. FINAL NUMERICAL CLEANUP
         S_denoised = np.nan_to_num(S_denoised, nan=0.0, posinf=0.0, neginf=0.0)

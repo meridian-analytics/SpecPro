@@ -732,8 +732,8 @@ def refinement_loop(
     k=2,
     perc=90,
     kernel_size=(0.8, 0.4),
-    flag_svd=1,
-    flag_S=1,
+    flag_svd=0,
+    flag_S=0,
     flag_G=1,
 ):
     """
@@ -758,10 +758,10 @@ def refinement_loop(
         Default is ``(0.8, 0.4)``.
 
     flag_svd : int, optional
-        Enable SVD-based background removal. Default is 1.
+        Enable SVD-based background removal. Default is 0.
 
     flag_S : int, optional
-        Enable softplus compression. Default is 1.
+        Enable softplus compression. Default is 0.
 
     flag_G : int, optional
         Enable Gaussian smoothing. Default is 1.
