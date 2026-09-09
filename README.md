@@ -415,6 +415,7 @@ python run_processing_pipeline.py input.h5 output.h5 --k 1.0 --perc 50 --thresho
 ---
 
 **A few notes on performance and logging**
+
 --workers: More workers do not necessarily mean faster processing. Performance depends on CPU/RAM resources, HDF5 I/O, spectrogram size, and pipeline complexity.
 --chunksize: The default 1 provides fine-grained task scheduling and responsive progress tracking. Larger values can reduce multiprocessing overhead but may reduce scheduling flexibility.
 --log_level: Use DEBUG for detailed diagnostics or WARNING for less verbose console output. A persistent log file is generated for every processing run.
@@ -463,10 +464,3 @@ This software is provided **"as-is"**, without warranty of any kind, either expr
 By using this tool, you acknowledge and accept all risks associated with its use. Please refer to the full GPLv3 license text for additional details regarding usage, modification, and redistribution.
 
 ---
-
-```
-
-One thing I would **not** keep from the previous README is the statement that the refinement loop happens identically after every stage. The updated wording makes the README describe the actual implementation without making the algorithm sound more rigid than it is.
-
-Also, your current script's **`imap()` preserves input row order**, which is important because the main process writes rows directly to the output HDF5 table. I would keep that behavior for the current version.
-```
