@@ -9,7 +9,7 @@ The pipeline applies a multi-stage signal-processing workflow to each spectrogra
 * 2-D Wavelet-based denoising filter - to remove white noise while preserving localized acoustic structures
 * Optional spectrogram resizing
 
-Each step (except resizing) is followed by a refinement loop to remove artefacts, including:
+Each processing step, except resizing, is followed by an iterative refinement loop designed to identify and remove potential processing artefacts, including:
 * SVD-based background removal
 * Gaussian smoothing
 
@@ -187,6 +187,33 @@ Each spectrogram then passes through the following stages:
            ▼
 **Enhanced Spectrogram**
 ```
+<br>
+
+A comparative example of raw and processed spectrograms, using the default processing parameters, for positively and negatively annotated data from the Baffin Bay dataset is shown below.
+
+<br>
+
+<table>
+<tr>
+<td align="center">
+
+**Positive annotation**
+
+<img src="figures/spectrograms_raw_vs_proc_positive.png"
+     alt="Raw versus processed spectrograms — positive annotation"
+     width="900">
+
+<br><br>
+
+**Negative annotation**
+
+<img src="figures/spectrograms_raw_vs_proc_negative.png"
+     alt="Raw versus processed spectrograms — negative annotation"
+     width="900">
+
+</td>
+</tr>
+</table>
 
 # Command-Line Usage
 
