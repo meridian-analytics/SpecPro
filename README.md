@@ -235,13 +235,38 @@ The general workflow is:
                           **Enhanced Spectrogram**
 ```
 
-The exact processing sequence is defined by `EnhanceSNR` in:
+The processing sequence is defined by `EnhanceSNR` in:
 
 ```text
 pam_processing_pipline.py
 ```
-
 ---
+<br>
+
+A comparative example of raw and processed spectrograms, using the default processing parameters, for positively and negatively annotated data from the Baffin Bay dataset is shown below.
+
+<table>
+<tr>
+<td align="center">
+
+**Positive annotation**
+
+<img src="figures/spectrograms_raw_vs_proc_positive.png"
+     alt="Raw versus processed spectrograms — positive annotation"
+     width="700">
+
+<br><br>
+
+**Negative annotation**
+
+<img src="figures/spectrograms_raw_vs_proc_negative.png"
+     alt="Raw versus processed spectrograms — negative annotation"
+     width="700">
+
+</td>
+</tr>
+</table>
+
 
 # Multiprocessing Architecture
 
