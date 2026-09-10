@@ -123,17 +123,7 @@ database.h5
                 └── unique_labels   ← available class labels
 ```
 
-Each row contains one spectrogram sample and its associated metadata.
-
-The `audio_repres` attribute stores the Ketos-specific spectrogram configuration, including information such as:
-
-* Frequency resolution
-* Time resolution
-* Frequency range
-* Window configuration
-* Spectrogram preprocessing information
-
-The **first table** containing the `audio_repres` attribute is selected for processing. If no suitable table is found, the pipeline raises:
+Each row contains one spectrogram sample and its associated metadata. The `audio_repres` attribute stores the Ketos-specific spectrogram configuration, thus `audio_repres` is being used as a semantic identifier, not as the location of the spectrogram itself. The first table containing the `audio_repres` attribute is selected for processing. If no suitable table is found, the pipeline raises:
 
 ```text
 Could not find a table with 'audio_repres' attribute.
@@ -414,7 +404,7 @@ python run_processing_pipeline.py input.h5 output.h5 --k 1.0 --perc 50 --thresho
 
 ---
 
-**A few notes on performance and logging**
+**A few notes on computational performance and logging**
 
 --workers: More workers do not necessarily mean faster processing. Performance depends on CPU/RAM resources, HDF5 I/O, spectrogram size, and pipeline complexity.
 
@@ -430,7 +420,7 @@ python run_processing_pipeline.py input.h5 output.h5 --k 1.0 --perc 50 --thresho
 > [!IMPORTANT]
 > ### ⚠️ Softplus Compression
 >
-> **Softplus compression is disabled by default (`flag_S=0`).**
+> **Softplus compression is disabled by default (`--flag_S = 0`).**
 >
 > It is intended for **visual enhancement only** and is **NOT RECOMMENDED** when preprocessing data for deep learning applications.
 
@@ -440,7 +430,7 @@ python run_processing_pipeline.py input.h5 output.h5 --k 1.0 --perc 50 --thresho
 ---
 # Installation
 
-It is recommended to create a virtual environment before installing the required packages listed in the requirements.txt file.
+For reproducibility, it is recommended to create a virtual environment before installing the required packages listed in the requirements.txt file.
 
 1. [Download](https://www.python.org/downloads/) and install `Python` if it is not already installed.
 2.	Install virtualenv (if needed; on UNIX-based systems): `sudo apt install python3-venv` 
