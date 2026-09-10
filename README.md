@@ -8,7 +8,7 @@ The pipeline applies a multi-stage signal-processing workflow to each spectrogra
 * **Pre-whitening** — reduces low-frequency (red) noise and flattens the spectrum
 * **Time-frequency Wiener-like filtering** — enhances signal-to-background contrast using an estimate of the local signal/noise structure
 * **2-D wavelet denoising** — reduces white noise while preserving localized acoustic structures
-* **Optional spectrogram resizing** — converts processed spectrograms to user-specified dimensions
+* **Spectrogram resizing** — converts processed spectrograms to user-specified dimensions
 
 Selected processing stages can be followed by refinement operations, including:
 
@@ -425,30 +425,31 @@ python run_processing_pipeline.py input.h5 output.h5 --k 1.0 --perc 50 --thresho
 --flush_interval: Controls how frequently the output HDF5 table is flushed to disk. The default is 100 rows. Larger values can reduce I/O overhead for large datasets, while smaller values provide more frequent persistence.
 
 ---
+<br>
 
+> [!IMPORTANT]
+> ### ⚠️ Softplus Compression
+>
+> **Softplus compression is disabled by default (`flag_S=0`).**
+>
+> It is intended for **visual enhancement only** and is **NOT RECOMMENDED** when preprocessing data for deep learning applications.
+
+
+<br>
+
+---
 # Installation
 
-The detector requires **Python 3.8** to ensure compatibility with the Ketos packages. It is recommended to install the specified version of Python and create a virtual environment before installing the required packages listed in the requirements.txt file.
+It is recommended to create a virtual environment before installing the required packages listed in the requirements.txt file.
 
-1. [Download](https://www.python.org/downloads/) and install `Python 3.8.0`
+1. [Download](https://www.python.org/downloads/) and install `Python` if it is not already installed.
 2.	Install virtualenv (if needed; on UNIX-based systems): `sudo apt install python3-venv` 
 3.	Create a virtual environment: `python3 -m venv myenv` 
 4.	Activate it: `source myenv/bin/activate` on UNIX-based systems OR `myenv\Scripts\activate` on Windows
 5.	Install packages: `pip install -r requirements.txt`
 6.	Deactivate: `deactivate`
 
-#### Notes
-
-- If a virtual environment is not required, install dependencies directly using:
-
-```bash
-pip install -r requirements.txt
-```
-
-- Python standard libraries are included with Python and do not require additional installation.
-
 ---
-
 
 # Author
 
